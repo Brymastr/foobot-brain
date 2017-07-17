@@ -1,0 +1,24 @@
+This service will handle the NLP and decide what to do with the response.
+This should probably be done in python.
+
+One-on-One vs group chat:
+Use one-on-one mode when only one user, or if in group chat and user says foobot
+foobot should be 'passive' in group chat and only do minor things unless directly addressed
+
+Conversation strings:
+several 'hard-coded' conversations streams
+can be triggered by saying something like "open the condo door" or "connect to my facebook account"
+conversations service should be built to store messages in order and maybe the state each user is in in each conversation.
+Store the message ID for each step of the conversation
+
+Information identification:
+ML for understanding nouns, verbs, times, requests, etc...
+json structure for each NLP'd message
+{
+  "places": ["My house", "Parksville", "New York"],
+  "times": ["Tomorrow", "6 pm", "Christmas day"],
+  "people": ["dad", "Jillian"],
+  "modifiers": ["please"],
+  "type": "statement/request/command/inform"
+  "sentiment": 3
+}

@@ -1,0 +1,19 @@
+{
+  "name": "foobot-brain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brymastr/foobot-brain.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Brymastr/foobot-brain/issues"
+  },
+  "homepage": "https://github.com/Brymastr/foobot-brain#readme"
+}
