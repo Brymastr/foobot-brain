@@ -1,4 +1,4 @@
-This service will handle the NLP and decide what to do with the response.
+This service will handle NLP and decide what to do with the response.
 This should probably be done in python.
 
 One-on-One vs group chat:
@@ -10,6 +10,7 @@ several 'hard-coded' conversations streams
 can be triggered by saying something like "open the condo door" or "connect to my facebook account"
 conversations service should be built to store messages in order and maybe the state each user is in in each conversation.
 Store the message ID for each step of the conversation
+Check each incoming message to see if user is mid-conversation. If user is in a conversation and this message doesn't match the response then pause the conversation
 
 Information identification:
 ML for understanding nouns, verbs, times, requests, etc...
@@ -18,7 +19,12 @@ json structure for each NLP'd message
   "places": ["My house", "Parksville", "New York"],
   "times": ["Tomorrow", "6 pm", "Christmas day"],
   "people": ["dad", "Jillian"],
+  "adjectives/adverbs": ["cheap", "quality"]
   "modifiers": ["please"],
-  "type": "statement/request/command/inform"
+  "intent": "statement/request/command/inform/confirm/deny/greet"
   "sentiment": 3
 }
+
+Information Extraction: https://github.com/mit-nlp/MITIE
+
+Tutorial: https://medium.com/rasa-blog/do-it-yourself-nlp-for-bot-developers-2e2da2817f3d
