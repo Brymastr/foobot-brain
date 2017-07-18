@@ -2,7 +2,8 @@ const
   config = require('./config')(),
   amqp = require('amqplib'),
   request = require('request-promise-native'),
-  queues = require('./queues');
+  queues = require('./queues'),
+  os = require('os');
 
 
 main();
@@ -41,16 +42,14 @@ async function main() {
 
 async function process(normalizedMessage) {
   // Do stuff
+  // Build message
   const message = {
     // text: normalizedMessage.text,
-    text: 'I have received your message',
+    text: os.hostname(),
     chat_id: normalizedMessage.is_group ? normalizedMessage.group_id : normalizedMessage.user_id,
     keyboard: null
   };
 
-  console.log(message)
-  
-  // Build message
   // Publish to message exchange with key message.<platform>.outgoing
   queues.publish(message, `message.${normalizedMessage.platform}.outgoing`, config.EXCHANGE_NAME);
 }
