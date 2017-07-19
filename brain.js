@@ -1,6 +1,5 @@
 const
   config = require('./config')(),
-  os = require('os'),
   rules = require('./rules'),
   nlp = require('./nlp'),
   queues = require('./queues');
@@ -30,7 +29,7 @@ exports.think = function(normalizedMessage) {
 
 function buildMessage(text, normalizedMessage) {
   return {
-    text: `${text} ${os.hostname()}!`,
+    text,
     chat_id: normalizedMessage.is_group ? normalizedMessage.group_id : normalizedMessage.user_id,
     keyboard: null
   };

@@ -1,10 +1,13 @@
+const os = require('os');
+
+
 module.exports = function(message) {
   const response = match(message)
   if(response !== undefined) return response;
 };
 
 const rules = [
-  [/(hello|h\Bi*\b|(hey\b)(\s*there)?|what'?s?\s*up|sup)/gi, hello]
+  [/(hello|h\Bi*\b|(hey\b)(\s*there)?|what'?s?\s*up|sup|howdy|how[\s.]*doing)/gi, hello]
 ];
 
 function match(message) {
@@ -14,5 +17,5 @@ function match(message) {
 }
 
 function hello(message) {
-  return 'Hello from';
+  return `Hello from ${os.hostname()}`;
 }
