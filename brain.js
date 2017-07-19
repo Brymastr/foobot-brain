@@ -1,38 +1,41 @@
 const
   config = require('./config')(),
+  os = require('os'),
   rules = require('./rules'),
-  nlp = require('./nlp');
+  nlp = require('./nlp'),
+  queues = require('./queues');
 
-module.export = function() {
+/**
+ * Develop a response for the incoming message
+ * Break on the first 'check' that returns a message
+ * @param {string} normalizedMessage 
+ */
+exports.think = function(normalizedMessage) {
 
-  /**
-   * Develop a response for the incoming message
-   * Return on the first 'check' to return a message
-   * @param {string} normalizedMessage 
-   */
-  async function think(normalizedMessage) {
-    const checks = [
-      nlp,
-      rules
-    ];
+  let text;
 
-    for(const c of checks) {
-      const message = c(normalizedMessage);
-      if(message !== undefined) return message;
-    }
+  const checks = [
+    // nlp,
+    rules
+  ];
+
+  for(const c of checks) {
+    text = c(normalizedMessage);
+    if(text !== undefined) break;
   }
+  console.log(`${normalizedMessage.text} => ${text !== undefined ? text : 'no response'}`);
+  if(text === undefined) return;
+  emit(buildMessage(text, normalizedMessage), normalizedMessage.platform);
+}
 
-  function buildMessage(normalizedMessage) {
-    const message = {
-      // text: normalizedMessage.text,
-      text: os.hostname(),
-      chat_id: normalizedMessage.is_group ? normalizedMessage.group_id : normalizedMessage.user_id,
-      keyboard: null
-    };
-  }
+function buildMessage(text, normalizedMessage) {
+  return {
+    text: `${text} ${os.hostname()}!`,
+    chat_id: normalizedMessage.is_group ? normalizedMessage.group_id : normalizedMessage.user_id,
+    keyboard: null
+  };
+}
 
-  function emit(message, platform) {
-    queues.publish(message, `message.${platform}.outgoing`, config.EXCHANGE_NAME);
-  }
-
-};
+function emit(message, platform) {
+  queues.publish(message, `message.${platform}.outgoing`, config.EXCHANGE_NAME);
+}
