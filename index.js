@@ -3,7 +3,8 @@ const
   amqp = require('amqplib'),
   request = require('request-promise-native'),
   queues = require('./queues'),
-  os = require('os');
+  os = require('os'),
+  brain = require('./brain');
 
 
 main();
@@ -34,22 +35,9 @@ async function main() {
     config.PROCESSING_QUEUE_NAME,
     config.EXCHANGE_NAME,
     config.PROCESSING_ROUTE_KEY,
-    process
+    brain.think
   );
 
   console.log('the brain is in control');
 }
 
-async function process(normalizedMessage) {
-  // Do stuff
-  // Build message
-  const message = {
-    // text: normalizedMessage.text,
-    text: os.hostname(),
-    chat_id: normalizedMessage.is_group ? normalizedMessage.group_id : normalizedMessage.user_id,
-    keyboard: null
-  };
-
-  // Publish to message exchange with key message.<platform>.outgoing
-  queues.publish(message, `message.${normalizedMessage.platform}.outgoing`, config.EXCHANGE_NAME);
-}
