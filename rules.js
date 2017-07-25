@@ -7,7 +7,7 @@ module.exports = function(message) {
 };
 
 const rules = [
-  [/(hello|h\Bi*\b|(hey\b)(\s*there)?|what'?s?\s*up|sup|howdy|how[\s.]*doing)/gi, hello]
+  [/(hello|h\Bi*\b|(hey\b)(\s*there)?|what'?s?\s*up|^sup\b|howdy|how[\s.]*doing)/gi, hello]
 ];
 
 function match(message) {

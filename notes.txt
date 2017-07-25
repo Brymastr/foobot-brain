@@ -28,3 +28,6 @@ json structure for each NLP'd message
 Information Extraction: https://github.com/mit-nlp/MITIE
 
 Tutorial: https://medium.com/rasa-blog/do-it-yourself-nlp-for-bot-developers-2e2da2817f3d
+
+Pretrained models here: https://github.com/stanfordnlp/GloVe
+With GloVe you can also train your own model given a corpus (futurama)

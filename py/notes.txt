@@ -1,0 +1,1 @@
+docker build -t sci . && docker run --rm -i -v data:/root/scikit_learn_data sci python3 feature_extraction.py
