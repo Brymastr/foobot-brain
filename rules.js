@@ -13,7 +13,7 @@ const rules = [
 
 function match(message) {
   for(const r of rules) {
-    if(message.text.match(r[0])) return r[1]();
+    if(message.text.match(r[0])) return r[1](message);
   }
 }
 
