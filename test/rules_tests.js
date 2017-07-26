@@ -1,57 +1,90 @@
-const assert = require('assert');
+const
+  assert = require('assert'),
+  rewire = require('rewire');
 
 describe('rules', function() {
-  const rules = require('../rules');
+  const rules = rewire('../rules');
   
   describe('#match()', function() {
+    const match = rules.__get__('match');
 
-    it(`should return 'Hello!' when the message contains hello`, function() {
-      const message = 'hello';
-      const expected = 'Hello!';
-      const response = rules(message);
-      assert.equal(expected, response);
+    
+  });
+
+  describe('#info()', function() {
+    const info = rules.__get__('info');
+
+    it(`should return a valid info message if the incoming message is not from a group`, function() {
+      const message = {
+        text: 'this message should be caught by the info rule',
+        date: 1501003052,
+        user_id: 102330327,
+        group_id: null,
+        is_group: false,
+        platform: 'messenger',
+        user_info: {
+          first_name: 'Jillian',
+          last_name: 'Last Name',
+          username: 'a_userNAme123'
+        },
+        bot_info: {
+          name: 'foobot_dev',
+          id: 420476595
+        }
+      };
+
+      const expected = `Message received from Jillian in a one-on-one chat with foobot_dev on the messenger platform`;
+      const actual = info(message);
+      assert.equal(expected, actual);
     });
 
-    it(`should return 'Hello!' when the message contains 'hey there'`, function() {
-      const message = 'hey     there!';
-      const expected = 'Hello!';
-      const response = rules(message);
-      assert.equal(expected, response);
+    it(`should return a valid info message if the incoming message is from a group`, function() {
+      const message = {
+        text: 'this message should be caught by the info rule',
+        date: 1501003052,
+        user_id: 102330327,
+        group_id: 449330922,
+        is_group: true,
+        platform: 'messenger',
+        user_info: {
+          first_name: 'Jillian',
+          last_name: 'Last Name',
+          username: 'a_userNAme123'
+        },
+        bot_info: {
+          name: 'foobot_dev',
+          id: 420476595
+        }
+      };
+
+      const expected = `Message received from Jillian as a part of a group including foobot_dev on the messenger platform`;
+      const actual = info(message);
+      assert.equal(expected, actual);
     });
 
-    it(`should return 'Hello!' when the message contains 'what's up?`, function() {
-      const message = `what's up?`;
-      const expected = 'Hello!';
-      const response = rules(message);
-      assert.equal(expected, response);
+    it(`should return a valid default actual if the user has no first_name`, function() {
+      const message = {
+        text: 'this message should be caught by the defaultResponse rule',
+        date: 1501003052,
+        user_id: 102330327,
+        group_id: null,
+        is_group: false,
+        platform: 'telegram',
+        user_info: {
+          first_name: null,
+          last_name: 'Last Name',
+          username: 'a_userNAme123'
+        },
+        bot_info: {
+          name: 'foobot_dev',
+          id: 420476595
+        }
+      };
+
+      const expected = `Message received from a_userNAme123 in a one-on-one chat with foobot_dev on the telegram platform`;
+      const actual = info(message);
+      assert.equal(expected, actual);
     });
 
-    it(`should return 'Hello!' when the message contains 'whats up?`, function() {
-      const message = `whats up?`;
-      const expected = 'Hello!';
-      const response = rules(message);
-      assert.equal(expected, response);
-    });
-
-    it(`should return 'Hello!' when the message contains 'what up?`, function() {
-      const message = `what up?`;
-      const expected = 'Hello!';
-      const response = rules(message);
-      assert.equal(expected, response);
-    });
-
-    it(`should return 'Hello!' when the message contains 'what up?`, function() {
-      const message = `what up?`;
-      const expected = 'Hello!';
-      const response = rules(message);
-      assert.equal(expected, response);
-    });
-
-    it(`should not return 'Hello!' when the message doesn't contain hello`, function() {
-      const message = 'this is a message that contains words that might trigger the hell o rule h i heyo what is there';
-      const expected = 'Hello!';
-      const response = rules(message);
-      assert.notEqual(expected, response);
-    });
   });
 })
