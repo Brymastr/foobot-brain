@@ -15,9 +15,9 @@ const rules = [
   [/say\s?something|speak|talk/gi, speak],
 ];
 
-function match(message) {
+async function match(message) {
   for(const rule of rules) {
-    if(message.text.match(rule[0])) return rule[1](message);
+    if(message.text.match(rule[0])) return await rule[1](message);
   }
 }
 
