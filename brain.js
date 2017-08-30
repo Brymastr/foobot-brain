@@ -9,7 +9,7 @@ const
  * Break on the first 'check' that returns a message
  * @param {string} normalizedMessage 
  */
-exports.think = function(normalizedMessage) {
+exports.think = async function(normalizedMessage) {
 
   let text;
 
@@ -19,7 +19,7 @@ exports.think = function(normalizedMessage) {
   ];
 
   for(const check of checks) {
-    text = check(normalizedMessage);
+    text = await check(normalizedMessage);
     if(text !== undefined) break;
   }
   console.log(`${normalizedMessage.text} => ${text !== undefined ? text : 'no response'}`);

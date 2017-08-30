@@ -35,7 +35,7 @@ async function main() {
     config.PROCESSING_QUEUE_NAME,
     config.EXCHANGE_NAME,
     config.PROCESSING_ROUTE_KEY,
-    brain.think
+    await brain.think
   );
 
   console.log('the brain is in control');

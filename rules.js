@@ -4,8 +4,8 @@ const
   request = require('request-promise-native');
 
 
-module.exports = function(message) {
-  const response = match(message);
+module.exports = async function(message) {
+  const response = await match(message);
   if(response !== undefined) return response;
 };
 
