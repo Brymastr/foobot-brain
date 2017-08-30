@@ -1,0 +1,1 @@
+docker build -t tf . && winpty docker run -it -p 8888:8888 -p 3000:3000 tf python main.py

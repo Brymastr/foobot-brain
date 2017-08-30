@@ -9,6 +9,7 @@ RUN apk add --no-cache libstdc++ lapack-dev && \
     pip install numpy && \
     pip install pandas && \
     pip install scipy && \
+    pip install nltk && \
     pip install scikit-learn && \
     find /usr/lib/python3.*/ -name 'tests' -exec rm -r '{}' + && \
     rm /usr/include/xlocale.h && \
