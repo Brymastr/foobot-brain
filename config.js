@@ -11,6 +11,9 @@ module.exports = () => {
     PROCESSING_QUEUE_NAME: 'processing',
     PROCESSING_ROUTE_KEY: 'message.*.normalized',
 
+    // Other services
+    WORDS_SERVICE: env.WORDS_SERVICE || 'http://172.17.0.2:3000'
+
     // Publish
     // OUTGOING_ROUTE_KEY: 'message.<platform>.outgoing',
   }

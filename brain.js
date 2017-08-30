@@ -18,8 +18,8 @@ exports.think = function(normalizedMessage) {
     rules
   ];
 
-  for(const c of checks) {
-    text = c(normalizedMessage);
+  for(const check of checks) {
+    text = check(normalizedMessage);
     if(text !== undefined) break;
   }
   console.log(`${normalizedMessage.text} => ${text !== undefined ? text : 'no response'}`);
