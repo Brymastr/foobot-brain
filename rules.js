@@ -16,8 +16,8 @@ const rules = [
 ];
 
 function match(message) {
-  for(const r of rules) {
-    if(message.text.match(r[0])) return r[1](message);
+  for(const rule of rules) {
+    if(message.text.match(rule[0])) return rule[1](message);
   }
 }
 
@@ -30,10 +30,9 @@ function info(message) {
   return response;
 }
 
-function speak(message) {
+async function speak(message) {
   const url = `${config.WORDS_SERVICE}/`;
-  request.post(url).then(response => {
-    console.log('Generated text: ' + response);
-    return response;
-  });
+  const response = await request.post(url);
+  console.log('Generated text: ' + response);
+  return response;
 }
