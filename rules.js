@@ -33,6 +33,7 @@ function info(message) {
 function speak(message) {
   const url = `${config.WORDS_SERVICE}/`;
   request.post(url).then(response => {
+    console.log('Generated text: ' + response);
     return response;
   });
 }
